@@ -3,27 +3,26 @@
 
 %bcond_without tests
 
-Name:                 python-cffi
-Version:              1.14.3
-Release:              2%{?dist}
-Summary:              Foreign Function Interface for Python to call C code
-License:              MIT
-URL:                  https://cffi.readthedocs.org/
-Source0:              %{pypi_source cffi}
-
+Name:           python-cffi
+Version:        1.14.3
+Release:        2%{?dist}
+Summary:        Foreign Function Interface for Python to call C code
+License:        MIT
+URL:            https://cffi.readthedocs.org/
+Source0:        %{pypi_source cffi}
 
 # Exclude i686 arch. Due to a modularity issue it's being added to the
 # x86_64 compose of CRB, but we don't want to ship it at all.
 # See: https://projects.engineering.redhat.com/browse/RCM-72605
-ExcludeArch:          i686
+ExcludeArch: i686
 
-BuildRequires:        make
-BuildRequires:        libffi-devel
-BuildRequires:        gcc
+BuildRequires:  make
+BuildRequires:  libffi-devel
+BuildRequires:  gcc
 
 %if %{with tests}
 # For tests:
-BuildRequires:        gcc-c++
+BuildRequires:  gcc-c++
 %endif
 
 %?python_enable_dependency_generator
@@ -34,17 +33,17 @@ reliable way of calling existing C code from Python. The interface is
 based on LuaJIT’s FFI.
 
 %package -n python%{python3_pkgversion}-cffi
-Summary:              Foreign Function Interface for Python 3 to call C code
+Summary:        Foreign Function Interface for Python 3 to call C code
 %if %{with docs}
-BuildRequires:        python3-sphinx
+BuildRequires:  python3-sphinx
 %endif
 %if %{with tests}
-BuildRequires:        python%{python3_pkgversion}-pytest
+BuildRequires:  python%{python3_pkgversion}-pytest
 %endif
-BuildRequires:        python%{python3_pkgversion}-devel
-BuildRequires:        python%{python3_pkgversion}-rpm-macros
-BuildRequires:        python%{python3_pkgversion}-setuptools
-BuildRequires:        python%{python3_pkgversion}-pycparser
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-rpm-macros
+BuildRequires:  python%{python3_pkgversion}-setuptools
+BuildRequires:  python%{python3_pkgversion}-pycparser
 %{?python_provide:%python_provide python%{python3_pkgversion}-cffi}
 
 %description -n python%{python3_pkgversion}-cffi
@@ -54,8 +53,8 @@ based on LuaJIT’s FFI.
 
 %if %{with docs}
 %package doc
-Summary:              Documentation for CFFI
-BuildArch:            noarch
+Summary:        Documentation for CFFI
+BuildArch:      noarch
 
 %description doc
 Documentation for CFFI, the Foreign Function Interface for Python.
@@ -96,9 +95,6 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} %{__python3} -m pytest c/ testing/
 %endif
 
 %changelog
-* Mon May 31 2021 Michael L. Young <elgueromexicano@gmail.com> - 1.14.3-2
-- Replace 'python_sitesearch' with 'python2_sitesearch'
-
 * Mon Jan 18 2021 Tomas Orsava <torsava@redhat.com> - 1.14.3-2
 - Convert from Fedora to the python39 module in RHEL8
 - Resolves: rhbz#1877430
